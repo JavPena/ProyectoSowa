@@ -5,15 +5,21 @@ var ref = storage.ref();
 var idClase = '';
 var db = firebase.firestore();
 var listener;
+var fileListener;
 var numeroStream;
 var inicializado = false;
 var usuario = '';
+var rol = '';
+var videoid = 0;
 
 firebase.auth().onAuthStateChanged((user) => {
     if(user){
         db.collection('Usuarios').doc(user.uid).get().then(doc => {
             usuario = doc.data().nombre
+            rol = doc.data().rol
         });
+    }else{
+        window.location = "https://imposing-bee-254701.firebaseapp.com/";
     }
 });
 
@@ -56,6 +62,8 @@ window.onload = () => {
     cargarVideos();
     
 
+    cargaArchivos();
+
 }
 
 async function cargarVideos(){
@@ -70,6 +78,30 @@ async function cargarVideos(){
             videosUl.innerHTML += `<ul><a href="#" onclick="actualizaVideo(${i}, false)">Clase ${i} - ${streams[i]}</a></ul>`;
         }
     });
+}
+
+async function cargaArchivos(){
+    if(rol == "Profesor"){
+        var fileInput = document.getElementById('fileInput');
+        var fileDisplayArea = document.getElementById('fileDisplayArea');
+
+        fileInput.addEventListener('change', function(e) {
+            var file = fileInput.files[0];
+            load = ref.child('cursos/'+idCurso+'/'+video+'/archivos/'+file.name)
+            load.put(file).then(function(snapshot) {
+                console.log('Uploaded a blob or file!');
+                load.getDownloadURL().then((url)=>{
+                    document.getElementById('list').innerHTML += `<li><a href="${url}">${file.name}</a></li>`;
+                }).catch(function(error) {
+                // Handle any errors
+                })
+            }).catch(function(error) {
+                // Handle any errors
+            })
+        })
+    }else{
+        document.getElementById('commentfile').innerHTML = ''
+    }
 }
 
 createInstance = (id, stream) => {
@@ -101,7 +133,18 @@ createInstance = (id, stream) => {
                 chatBuffer.push(elemento);
             })
         });
+        db.collection('Archivos').doc(idCurso+'_'+videoid).get().then(docs =>{
+            console.log(docs.data().Archivos)
+            docs.data().Archivos.forEach(file =>{
+                elemento = {
+                    'nombre' : file
+                }
+                fileBuffer.push(elemento)
+                console.log(fileBuffer[0])
+            })
+        });
         listener = window.setInterval(chequeaMensajesVideo, 1000);
+        fileListener=window.setInterval(chequeaArchivos,1000)
         var img = ref.child(`cursos/${idCurso}/${id}/video.mp4`);
         img.getDownloadURL().then((url) => {
             iFrame = `<video id="videoPlayer" width="320" height="176" controls> <source src="${url}" type="video/mp4"> Your browser does not support HTML5 video. </video>`
@@ -114,6 +157,23 @@ createInstance = (id, stream) => {
 
 }
 
+function chequeaArchivos(){
+    
+   for(var i=0 ; i< fileBuffer.length ;i++){
+        nombre = fileBuffer[i].nombre
+        info = ref.child(`cursos/${idCurso}/${videoid}/archivos/${nombre}`)
+        info.getDownloadURL().then((url)=>{
+            fileString = `<b><a href="${url}">${nombre}</a></b>`
+            filedata.push(fileString)
+        }).catch(function(error) {
+            // Handle any errors
+            console.log(error);
+        });
+        
+   }
+
+   clearFilesAndShow()
+}
 
 function chequeaMensajesVideo(){
     video = document.getElementById('videoPlayer');
@@ -157,9 +217,15 @@ actualizaVideo = (id, stream) => {
      *      - chatPlayer : el chat del video.
      *      - filePlayer : archivos que se subieron en la clase.
      */
+
+    videoid = id
     if(listener){
         clearInterval(listener);
     }
+    if(fileListener){
+        clearInterval(fileListener)
+    }
+    document.getElementById("list").innerHTML = ''
     removeElement('videoPlayer');
     removeElement('chatPlayer');
     removeElement('filePlayer');

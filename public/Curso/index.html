@@ -22,6 +22,14 @@
                     <input type="submit" value="Post" onclick="envia()"/></form>
                 </div>
             </div>
+            <div id="files">
+                <div class="FixedHeightContainer">
+                    <div id="list"></div>
+                </div >
+                <div class="commentfile" id ="commentfile">
+                    <input type="file" id="fileInput">
+                </div>
+            </div>
         </div>
 
         <div id="videosDiv"><ul id="videosUl"></ul></div>
@@ -67,7 +75,8 @@
     auth = firebase.auth();
 	</script>
     <script src="chat.js"></script>
-	<script src="app.js"></script>
+    <script src="app.js"></script>
+    <script src="files.js"></script>
 
 	
 

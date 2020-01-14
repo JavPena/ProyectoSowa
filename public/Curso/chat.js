@@ -33,4 +33,5 @@ function clearAndShow (){
     titleInput.value = "";
     messageBox.innerHTML = "";
     messageBox.innerHTML += " " + titles.join("<br/> ") + "<br/>";
+    
 }

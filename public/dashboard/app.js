@@ -66,11 +66,11 @@ actualizarVista = () => {
             // Se crean los datos
             var nombre = doc.data().nombre;
             var desc = doc.data().descripcion;
-            var live = false;
+            var code = doc.data().Codigo;
 
             var fila = tabla.insertRow();
 
-            fila.innerHTML = `<tr><td>${nombre}</td><td>${desc}</td><td>${false}</td>`;
+            fila.innerHTML = `<tr><td>${nombre}</td><td>${desc}</td><td><a href="https://imposing-bee-254701.firebaseapp.com/Curso/index.html?Course=${code}">Curso<\a></td>`;
         }).catch(err => {console.log(err)});
     });
     

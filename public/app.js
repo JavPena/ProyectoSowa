@@ -72,8 +72,6 @@ function cerrarSesion() {
 	firebase.auth().signOut()
 	.then(function(){
 		console.log('Cerrando sesiona activa');
-		var contenedor = document.getElementById('leyendaEmailActivo');
-        contenedor.innerHTML = '';
         window.location.reload();
 
 	})
