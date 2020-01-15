@@ -7,11 +7,10 @@
     <title>Administrador de Fixy</title>
     <link rel="icon" type="image/png" href="./img/favicon.png" sizes="16x16">
     <link rel="stylesheet" type="text/css" href="style.css">
-
 </head>
 
 <body>
-
+    <!-- BASE DEL BODY -->
     <!-- Otros de bootstrap -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
@@ -53,13 +52,11 @@
     </script>
 
     <script src="app.js"></script>
-
-    <!-- Log in -->
+    <!--  -->
     <div>
-
         <div class="container">
             <div class="d-flex justify-content-center h-100 p-2">
-                <img src="./assets/logo.svg" class="w-25 align-items-center ">
+                <img src="../assets/logo.svg" class="w-10 align-items-center ">
             </div>
             <div class="d-flex justify-content-center h-100 p-2">
 
@@ -67,26 +64,39 @@
 
                     <div class="card-header">
                         <div class="d-flex justify-content-center">
-                            <h1>Iteach-U</h1>
+                            <h1>Registro</h1>
                         </div>
                     </div>
                     <div class="card-body">
                         <form>
-                            <div class="input-group form-group">
+                            <div id="Email" class="input-group form-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">📧</span>
                                 </div>
-                                <input id="emailLogin" type="text" class="form-control" placeholder="Ingresar email">
+                                <input id="emailReg" type="text" class="form-control" placeholder="Ingresar email">
                             </div>
-                            <div class="input-group form-group">
+                            <div id="Password" class="input-group form-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">🔑</span>
                                 </div>
-                                <input id="passwordLogin" type="password" class="form-control" placeholder="Ingresar contraseña">
+                                <input id="passwordReg" type="password" class="form-control" placeholder="Ingresar contraseña">
+                            </div>
+                            <div id="Nombre" class="intput-group form-group">
+                                <div class="input-group-prepend">
+                                    <input id="nameReg" type="text" class="form-control" placeholder="Nombre">
+                                    <input id="lastNameReg" type="text" class="form-control" placeholder="Apellidos">
+                                </div>
+                            </div>
+                            <div id="Rut" class="input-group form-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">📧</span>
+                                </div>
+                                <input id="RutReg" type="text" class="form-control" placeholder="Ingresar email">
                             </div>
                             <div class="form-group">
                                 <div class="d-flex flex-row-reverse">
-                                    <button type="button" class="btn btn-warning login_btn" onclick="ingresar()"> Login</button>
+                                    <button type="button" class="btn btn-warning login_btn">
+                                        Login</button>
                                 </div>
                             </div>
                         </form>
@@ -103,13 +113,7 @@
             </div>
         </div>
     </div>
-    <!-- ------ -->
-
-    <!-- <div id="contenedorUsuario">
-		<input id="emailLogin" type="email" placeholder="Ingresa email" name="">
-		<input id="passwordLogin" i type="password" placeholder="Ingresa contraseña" name="">
-		<button onclick="ingresar()">Entrar</button>
-	</div> -->
+    <!--  -->
 </body>
 
 </html>
