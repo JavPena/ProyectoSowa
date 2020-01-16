@@ -7,24 +7,29 @@ html,body{
     font-family: 'Numans', sans-serif;
     }
     
-.FixedHeightContainer{
+.files{
     /* float:right; */
-    height: 250px;
-    width:250px; 
-    padding:3px; 
-    background:gray;
+    height: 240px;
+    width:200px; 
+   
+    background:rgb(0, 195, 255)
     
 
 }
 #chatDisplay{
-    height:224px;
+    height:240px;
+    width:500px;
     overflow:auto;
     background:#fff;
     word-wrap: break-word;
+    
 }
 
 textarea {
     width: 256px;
-    height: 20px;
+    height: 30px;
     resize: none;
+}
+.boton{
+
 }

@@ -8,26 +8,27 @@
     <link rel="stylesheet" type="text/css" href="style.css">
 
 </head>
-<body class="fondo-blur">
+<body>
     <div class="d-flex p-2 justify-content-center">
         <section id="cuerpoPag">
+            <h1>Streaming en curso</h1>
             <div id="classInstance">
                 <div id="video"></div>
-                <div id="chat">
-                    <div class="FixedHeightContainer">
+                <div class="chat float-md-right" id="chat" style="position: absolute;right: 200px;">
+                    <div class="FixedHeightContainer ">
                         <div id="chatDisplay"></div>
                     </div >
                     <div class="comment">
-                        <textarea id="chatInput" type="text "rows="2" cols="4" placeholder="write a comment......"></textarea>
-                        <input type="submit" value="Post" onclick="envia()"/></form>
+                        <textarea id="chatInput" type="text "rows="2" cols="4" placeholder="Escribe un comentario......" style="position: absolute;right:45px"></textarea>
+                        <input type="submit" value="Post" style="position: absolute;right: 1px;" onclick="envia()"/></form>
                     </div>
                 </div>
-                <div id="files">
-                    <div class="FixedHeightContainer">
+                <div class="files float-left" id="files"    style="position:absolute; top:3; right:1000px">
+                    <div class="FixedHeightContainer"  >
                         <div id="list"></div>
                     </div >
                     <div class="commentfile" id ="commentfile">
-                        <input type="file" id="fileInput">
+                        <input class="boton" type="file" id="fileInput" style="position: absolute;top: 240px;">
                     </div>
                 </div>
             </div>
