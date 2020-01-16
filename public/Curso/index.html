@@ -8,32 +8,35 @@
     <link rel="stylesheet" type="text/css" href="style.css">
 
 </head>
-<body>
-
-    <section id="cuerpoPag">
-        <div id="classInstance">
-            <div id="video"></div>
-            <div id="chat">
-                <div class="FixedHeightContainer">
-                    <div id="chatDisplay"></div>
-                </div >
-                <div class="comment">
-                    <textarea id="chatInput" type="text "rows="2" cols="4" placeholder="write a comment......"></textarea>
-                    <input type="submit" value="Post" onclick="envia()"/></form>
+<body class="fondo-blur">
+    <div class="d-flex p-2 justify-content-center">
+        <section id="cuerpoPag">
+            <div id="classInstance">
+                <div id="video"></div>
+                <div id="chat">
+                    <div class="FixedHeightContainer">
+                        <div id="chatDisplay"></div>
+                    </div >
+                    <div class="comment">
+                        <textarea id="chatInput" type="text "rows="2" cols="4" placeholder="write a comment......"></textarea>
+                        <input type="submit" value="Post" onclick="envia()"/></form>
+                    </div>
+                </div>
+                <div id="files">
+                    <div class="FixedHeightContainer">
+                        <div id="list"></div>
+                    </div >
+                    <div class="commentfile" id ="commentfile">
+                        <input type="file" id="fileInput">
+                    </div>
                 </div>
             </div>
-            <div id="files">
-                <div class="FixedHeightContainer">
-                    <div id="list"></div>
-                </div >
-                <div class="commentfile" id ="commentfile">
-                    <input type="file" id="fileInput">
-                </div>
-            </div>
-        </div>
+    
+            <div id="videosDiv"><ul id="videosUl"></ul></div>
+        </section>
 
-        <div id="videosDiv"><ul id="videosUl"></ul></div>
-    </section>
+    </div>
+
 	<!-- Otros de bootstrap -->
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
@@ -58,21 +61,21 @@
     <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-storage.js"></script>
 	<script>
 	  // Your web app's Firebase configuration
-
-	  const firebaseConfig = {
-      apiKey: "AIzaSyCY5y_6t5JTx9NNavHAqTBHkVpWCupEuXo",
-      authDomain: "imposing-bee-254701.firebaseapp.com",
-      databaseURL: "https://imposing-bee-254701.firebaseio.com",
-      projectId: "imposing-bee-254701",
-      storageBucket: "imposing-bee-254701.appspot.com",
-      messagingSenderId: "916087777723",
-      appId: "1:916087777723:web:f45fd2aeefd300ff66bc9e",
-      measurementId: "G-TQX2MFBVN9"
+    
+	//  const firebaseConfig = {
+     // apiKey: "AIzaSyCY5y_6t5JTx9NNavHAqTBHkVpWCupEuXo",
+     // authDomain: "imposing-bee-254701.firebaseapp.com",
+     // databaseURL: "https://imposing-bee-254701.firebaseio.com",
+     // projectId: "imposing-bee-254701",
+     // storageBucket: "imposing-bee-254701.appspot.com",
+     // messagingSenderId: "916087777723",
+     // appId: "1:916087777723:web:f45fd2aeefd300ff66bc9e",
+     // measurementId: "G-TQX2MFBVN9"
     };
     // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    firebase.analytics();
-    auth = firebase.auth();
+   // firebase.initializeApp(firebaseConfig);
+    //firebase.analytics();
+    //auth = firebase.auth();
 	</script>
     <script src="chat.js"></script>
     <script src="app.js"></script>
