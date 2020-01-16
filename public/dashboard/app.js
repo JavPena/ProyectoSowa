@@ -5,23 +5,23 @@ var db;
 window.onload = ev => {
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
-		    // User is signed in.
-		    var displayName = user.displayName;
-		    var email = user.email;
-		    var emailVerified = user.emailVerified;
-		    var photoURL = user.photoURL;
-		    var isAnonymous = user.isAnonymous;
-		    var uid = user.uid;
+            // User is signed in.
+            var displayName = user.displayName;
+            var email = user.email;
+            var emailVerified = user.emailVerified;
+            var photoURL = user.photoURL;
+            var isAnonymous = user.isAnonymous;
+            var uid = user.uid;
             var providerData = user.providerData;
 
-		    console.log("Usuario conectado")
+            console.log("Usuario conectado")
             db = firebase.firestore();
             actualizarSiEsUsuarioValido(uid);
-            
 
-		} else {
+
+        } else {
             window.location = "https://imposing-bee-254701.firebaseapp.com";
-		}
+        }
 
     });
 
@@ -29,35 +29,48 @@ window.onload = ev => {
 
 
 function actualizarSiEsUsuarioValido(uid) {
-	var db = firebase.firestore();
+    var db = firebase.firestore();
 
-	var docRef = db.collection("Usuarios").doc(uid);
+    var docRef = db.collection("Usuarios").doc(uid);
 
-	docRef.get().then(function(doc) {
+    docRef.get().then(function(doc) {
 
-	    if (doc.exists) {
-	    	console.log("Usuario conectado")
+        if (doc.exists) {
+            console.log("Usuario conectado")
 
-			IdUsr = uid
-            
+            IdUsr = uid
+
             datosUsr = doc.data();
-			actualizarVista()
-	    } else {
+            actualizarVista()
+        } else {
             console.log('the game');
-	    	// Actualizando cuerpo para que no cualquiera lo pueda ver
-	    	actualizarSiDesconecta()
-	    }
-		}).catch(function(error) {
-		    console.log("Error getting document:", error);
-	});
+            // Actualizando cuerpo para que no cualquiera lo pueda ver
+            actualizarSiDesconecta()
+        }
+    }).catch(function(error) {
+        console.log("Error getting document:", error);
+    });
 }
 
 
+function cerrarSesion() {
+    firebase.auth().signOut()
+        .then(function() {
+            console.log('Cerrando sesiona activa');
+            window.location.reload();
+
+        })
+        .catch(function(error) {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            console.log(errorCode);
+            console.log(errorMessage);
+        });
+}
+
 
 actualizarVista = () => {
-	console.log('me actualiza');
-	document.getElementById('nombreUsr').value = datosUsr.nombre;
-	document.getElementById('rolUsr').value = datosUsr.rol;
+    console.log('me actualiza');
 
     var suscripciones = datosUsr.suscripciones;
     var tabla = document.getElementById('Courses').getElementsByTagName('tbody')[0];
@@ -71,8 +84,8 @@ actualizarVista = () => {
             var fila = tabla.insertRow();
 
             fila.innerHTML = `<tr><td>${nombre}</td><td>${desc}</td><td><a href="https://imposing-bee-254701.firebaseapp.com/Curso/index.html?Course=${code}">Curso<\a></td>`;
-        }).catch(err => {console.log(err)});
+        }).catch(err => { console.log(err) });
     });
-    
+
 
 }

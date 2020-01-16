@@ -2,18 +2,27 @@
 <html>
 
 <head>
-
     <meta charset="utf-8">
     <!-- <link rel="stylesheet" href="styles.css"> -->
     <title>Dashboard</title>
     <link rel="icon" type="image/png" href="./img/favicon.png" sizes="16x16">
-
     <link rel="stylesheet" type="text/css" href="style.css">
-
-
 </head>
 
 <body>
+
+
+    <table id="Courses">
+        <thead>
+            <tr>
+                <td>Nombre Curso</td>
+                <td>Descripción</td>
+                <td>Link al curso</td>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <button type="button" onclick="cerrarSesion()">Cerrar Sesion</button>
 
     <!-- Otros de bootstrap -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -37,32 +46,6 @@
 
     <script src="https://www.gstatic.com/firebasejs/7.6.1/firebase-functions.js"></script>
 
-    <div>
-
-
-    </div>
-
-    <!-- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
-    <section>
-        <div id="datosUsuario">
-            <input id="nombreUsr" value="">
-            <input id="rolUsr" value="">
-        </div>
-    </section>
-
-    <table id="Courses">
-        <thead>
-            <tr>
-                <td>nombre Curso</td>
-                <td>Descripción</td>
-                <td>En vivo</td>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-
-
-
     <script>
         // Your web app's Firebase configuration
 
@@ -82,7 +65,7 @@
         auth = firebase.auth();
     </script>
 
-    <!-- <script src="app.js"></script> -->
+    <script src="app.js"></script>
 
 
 

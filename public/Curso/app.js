@@ -12,13 +12,16 @@ var usuario = '';
 var rol = '';
 var videoid = 0;
 
+
 firebase.auth().onAuthStateChanged((user) => {
-    if(user){
+    if (user) {
         db.collection('Usuarios').doc(user.uid).get().then(doc => {
             usuario = doc.data().nombre
             rol = doc.data().rol
+            console.log(doc.data().rol)
+            cargaArchivos();
         });
-    }else{
+    } else {
         window.location = "https://imposing-bee-254701.firebaseapp.com/";
     }
 });
@@ -26,7 +29,7 @@ firebase.auth().onAuthStateChanged((user) => {
 
 function getUrlVars() {
     var vars = {};
-    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m, key, value) {
         vars[key] = value;
     });
     return vars;
@@ -35,38 +38,36 @@ function getUrlVars() {
 function removeElement(elementId) {
     // Removes an element from the document
     var element = document.getElementById(elementId);
-    if(element)
+    if (element)
         element.parentNode.removeChild(element);
 }
 
 window.onload = () => {
     var key = getUrlVars()['Course'];
-    if(key === undefined || !key || key === null){
+    if (key === undefined || !key || key === null) {
         console.log('Falta id del curso');
         window.location = "https://imposing-bee-254701.firebaseapp.com/";
         return;
     }
     idCurso = key.replace('#', '');
     document.getElementById('cuerpoPag').innerHTML += iFrame;
-    document.getElementById("chatInput").addEventListener('keyup', e=>{
-        if(e.keyCode == 13){
+    document.getElementById("chatInput").addEventListener('keyup', e => {
+        if (e.keyCode == 13) {
             envia();
         }
     })
 
 
     //Agrega los videos de la base de datos
-    
 
-    
+
+
     cargarVideos();
-    
 
-    cargaArchivos();
 
 }
 
-async function cargarVideos(){
+async function cargarVideos() {
     claseActual = await db.collection('Cursos').doc(idCurso).get();
     dataClase = claseActual.data();
     db.collection('Cursos').doc(idCurso).get().then(doc => {
@@ -74,32 +75,40 @@ async function cargarVideos(){
         numeroStream = streams.length;
         var videosUl = document.getElementById('videosUl');
         videosUl.innerHTML += `<ul><a href="#" onclick="actualizaVideo(${dataClase.clave}, true)">Volver al Stream </a></ul>`;
-        for(var i = streams.length-1 ; i>=0 ; i--){
+        for (var i = streams.length - 1; i >= 0; i--) {
             videosUl.innerHTML += `<ul><a href="#" onclick="actualizaVideo(${i}, false)">Clase ${i} - ${streams[i]}</a></ul>`;
         }
     });
 }
 
-async function cargaArchivos(){
-    if(rol == "Profesor"){
+function cargaArchivos() {
+    console.log(rol)
+    if (rol == "Profesor") {
+        document.getElementById('commentfile').innerHTML = '<input type="file" id="fileInput">'
         var fileInput = document.getElementById('fileInput');
         var fileDisplayArea = document.getElementById('fileDisplayArea');
 
         fileInput.addEventListener('change', function(e) {
             var file = fileInput.files[0];
-            load = ref.child('cursos/'+idCurso+'/'+video+'/archivos/'+file.name)
+            path = 'cursos/' + idCurso + '/' + video + '/archivos/' + file.name
+            load = ref.child(path)
             load.put(file).then(function(snapshot) {
                 console.log('Uploaded a blob or file!');
-                load.getDownloadURL().then((url)=>{
+                load.getDownloadURL().then((url) => {
                     document.getElementById('list').innerHTML += `<li><a href="${url}">${file.name}</a></li>`;
+                    datos = {
+                        "Archivos": [file.name]
+                    }
+
+                    db.collection('Archivos').doc(idCurso + "_" + video).set(datos);
                 }).catch(function(error) {
-                // Handle any errors
+                    // Handle any errors
                 })
             }).catch(function(error) {
                 // Handle any errors
             })
         })
-    }else{
+    } else {
         document.getElementById('commentfile').innerHTML = ''
     }
 }
@@ -115,36 +124,36 @@ createInstance = (id, stream) => {
     videoDiv = document.getElementById('video');
     idClase = `${idCurso}_${id}`;
     console.log(idClase);
-    if(stream){
+    if (stream) {
         iFrame = `<iframe id="videoPlayer" src="https://demo.flashphoner.com:8888/embed_player?urlServer=&streamName=rtmp://35.223.202.6/live/${id}&mediaProviders=WebRTC,Flash,MSE,WSPlayer" marginwidth="0" marginheight="0" frameborder="0" width="20%" height="200px" scrolling="no" allowfullscreen="allowfullscreen"></iframe>`;
         videoDiv.innerHTML += iFrame;
         //TODO: Agregar listener del chat en streaming
         chequeaMensajesStream();
 
-    } else{
-        db.collection('Chat').where('clase', '==', idClase).get().then(docs =>{
+    } else {
+        db.collection('Chat').where('clase', '==', idClase).get().then(docs => {
             console.log('ayuda');
             docs.forEach(doc => {
                 elemento = {
-                    'nombre' : doc.data().nombre,
-                    'mensaje' : doc.data().mensaje,
-                    'tiempo' : doc.data().tiempo
+                    'nombre': doc.data().nombre,
+                    'mensaje': doc.data().mensaje,
+                    'tiempo': doc.data().tiempo
                 }
                 chatBuffer.push(elemento);
             })
         });
-        db.collection('Archivos').doc(idCurso+'_'+videoid).get().then(docs =>{
+        db.collection('Archivos').doc(idCurso + '_' + videoid).get().then(docs => {
             console.log(docs.data().Archivos)
-            docs.data().Archivos.forEach(file =>{
+            docs.data().Archivos.forEach(file => {
                 elemento = {
-                    'nombre' : file
+                    'nombre': file
                 }
                 fileBuffer.push(elemento)
                 console.log(fileBuffer[0])
             })
         });
         listener = window.setInterval(chequeaMensajesVideo, 1000);
-        fileListener=window.setInterval(chequeaArchivos,1000)
+        fileListener = window.setInterval(chequeaArchivos, 1000)
         var img = ref.child(`cursos/${idCurso}/${id}/video.mp4`);
         img.getDownloadURL().then((url) => {
             iFrame = `<video id="videoPlayer" width="320" height="176" controls> <source src="${url}" type="video/mp4"> Your browser does not support HTML5 video. </video>`
@@ -157,29 +166,29 @@ createInstance = (id, stream) => {
 
 }
 
-function chequeaArchivos(){
-    
-   for(var i=0 ; i< fileBuffer.length ;i++){
+function chequeaArchivos() {
+
+    for (var i = 0; i < fileBuffer.length; i++) {
         nombre = fileBuffer[i].nombre
         info = ref.child(`cursos/${idCurso}/${videoid}/archivos/${nombre}`)
-        info.getDownloadURL().then((url)=>{
+        info.getDownloadURL().then((url) => {
             fileString = `<b><a href="${url}">${nombre}</a></b>`
             filedata.push(fileString)
         }).catch(function(error) {
             // Handle any errors
             console.log(error);
         });
-        
-   }
 
-   clearFilesAndShow()
+    }
+
+    clearFilesAndShow()
 }
 
-function chequeaMensajesVideo(){
+function chequeaMensajesVideo() {
     video = document.getElementById('videoPlayer');
-   
-    for(var i=0 ; i<chatBuffer.length ; i++){
-        if(chatBuffer[i].tiempo < video.currentTime){
+
+    for (var i = 0; i < chatBuffer.length; i++) {
+        if (chatBuffer[i].tiempo < video.currentTime) {
             insert(chatBuffer[i]);
             chatBuffer.splice(i, 1);
 
@@ -187,8 +196,8 @@ function chequeaMensajesVideo(){
     }
 }
 
-function chequeaMensajesStream(){
-    if(!inicializado){
+function chequeaMensajesStream() {
+    if (!inicializado) {
         db.collection("Chat").where("clase", "==", `${idCurso}_${numeroStream}`)
             .onSnapshot(function(querySnapshot) {
                 console.log('Hola');
@@ -198,14 +207,14 @@ function chequeaMensajesStream(){
                     console.log(doc);
 
                     elemento = {
-                        'nombre' : doc.data().nombre,
-                        'mensaje' : doc.data().mensaje,
-                        'tiempo' : doc.data().tiempo
+                        'nombre': doc.data().nombre,
+                        'mensaje': doc.data().mensaje,
+                        'tiempo': doc.data().tiempo
                     }
                     insert(elemento);
                 });
             });
-            inicializado = true;
+        inicializado = true;
     }
 }
 
@@ -219,17 +228,17 @@ actualizaVideo = (id, stream) => {
      */
 
     videoid = id
-    if(listener){
+    if (listener) {
         clearInterval(listener);
     }
-    if(fileListener){
+    if (fileListener) {
         clearInterval(fileListener)
     }
     document.getElementById("list").innerHTML = ''
     removeElement('videoPlayer');
     removeElement('chatPlayer');
     removeElement('filePlayer');
-    if(!stream){
+    if (!stream) {
         document.getElementById('chatInput').disabled = true;
     }
 
