@@ -47,11 +47,11 @@ function actualizarSiEsUsuarioValido(uid) {
     var docRef = db.collection("Usuarios").doc(uid);
 
     docRef.get().then(function(doc) {
-        var cCuerpo = document.getElementById('contenedorCuerpo');
-        var cUsuario = document.getElementById('contenedorUsuario');
+        // var cCuerpo = document.getElementById('contenedorCuerpo');
+        // var cUsuario = document.getElementById('contenedorUsuario');
         if (doc.exists) {
             console.log("Usuario conectado")
-            cUsuario.innerHTML = '<div class="float-right d-inline-block mr-2"><button class="btn btn-outline-primary " onclick="cerrarSesion()" > Cerrar sesión </button></div>';
+                // cUsuario.innerHTML = '<div class="float-right d-inline-block mr-2"><button class="btn btn-outline-primary " onclick="cerrarSesion()" > Cerrar sesión </button></div>';
 
             IdUsr = uid
 
