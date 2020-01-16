@@ -11,4 +11,5 @@ function clearFilesAndShow (){
     messageBox.innerHTML = "";
     messageBox.innerHTML += " " + filedata.join("<br/> ") + "<br/>";
     filedata = []
+    
 }

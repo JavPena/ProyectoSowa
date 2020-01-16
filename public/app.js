@@ -84,26 +84,19 @@ function cerrarSesion() {
 }
 
 function actualizarSiDesconecta(argument) {
-	var cCuerpo = document.getElementById('contenedorCuerpo');
-	var cUsuario = document.getElementById('contenedorUsuario');
-
-	cUsuario.innerHTML = '<div class="row d-flex justify-content-center"> <div class="col-md-4 text-center"> <input id="emailLogin" type="email" placeholder="Ingresa email" name="" class="form-control">'+
-		'<input id="passwordLogin" type="password" placeholder="Ingresa contraseña" name="" class="form-control mt-1">'+
-		'<button class="btn btn-outline-primary mt-2" onclick="ingresar()">entrar</button> </div></div>'
-	cCuerpo.innerHTML = '<div class="row d-flex justify-content-center"><div class="col-md-6"><p class="text-center mt-5 mx-3 text-muted lead">' + 
-			'Esta es la página web de administración del sistema Fixy. Permite gestionar diversos ' +
-			'parámetros y módulos del sistema.' +
-		'</p>' +
-		'<p class="text-center text-muted lead mx-3">' +
-			'Es necesario ingresar con una cuenta de administrador para poder ver las herramientas' +
-			'de gestion de usuarios y servicios.' + '</p> </div></div>'
-}
+	
+	}
 
 
 function actualizarVista(){
     console.log('deberia iniciar');
     window.location = "https://imposing-bee-254701.firebaseapp.com/dashboard/index.html"
 
+}
+
+function registra(){
+	console.log('deberia iniciar');
+    window.location = "https://imposing-bee-254701.firebaseapp.com/register/index.html"
 }
 
 

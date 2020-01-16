@@ -53,11 +53,24 @@ function actualizarSiEsUsuarioValido(uid) {
 }
 
 
+function cerrarSesion(){
+	firebase.auth().signOut()
+	.then(function(){
+		console.log('Cerrando sesiona activa');
+        window.location.reload();
+
+	})
+	.catch(function(error){
+		var errorCode = error.code;
+		var errorMessage = error.message;
+		console.log(errorCode);
+		console.log(errorMessage);
+	});
+}
+
 
 actualizarVista = () => {
 	console.log('me actualiza');
-	document.getElementById('nombreUsr').value = datosUsr.nombre;
-	document.getElementById('rolUsr').value = datosUsr.rol;
 
     var suscripciones = datosUsr.suscripciones;
     var tabla = document.getElementById('Courses').getElementsByTagName('tbody')[0];

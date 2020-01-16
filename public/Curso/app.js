@@ -12,11 +12,14 @@ var usuario = '';
 var rol = '';
 var videoid = 0;
 
+
 firebase.auth().onAuthStateChanged((user) => {
     if(user){
         db.collection('Usuarios').doc(user.uid).get().then(doc => {
             usuario = doc.data().nombre
             rol = doc.data().rol
+            console.log(doc.data().rol)
+            cargaArchivos();
         });
     }else{
         window.location = "https://imposing-bee-254701.firebaseapp.com/";
@@ -62,8 +65,6 @@ window.onload = () => {
     cargarVideos();
     
 
-    cargaArchivos();
-
 }
 
 async function cargarVideos(){
@@ -80,18 +81,26 @@ async function cargarVideos(){
     });
 }
 
-async function cargaArchivos(){
+function cargaArchivos(){
+    console.log(rol)
     if(rol == "Profesor"){
+        document.getElementById('commentfile').innerHTML = '<input type="file" id="fileInput">'
         var fileInput = document.getElementById('fileInput');
         var fileDisplayArea = document.getElementById('fileDisplayArea');
 
         fileInput.addEventListener('change', function(e) {
             var file = fileInput.files[0];
-            load = ref.child('cursos/'+idCurso+'/'+video+'/archivos/'+file.name)
+            path = 'cursos/'+idCurso+'/'+video+'/archivos/'+file.name
+            load = ref.child(path)
             load.put(file).then(function(snapshot) {
                 console.log('Uploaded a blob or file!');
                 load.getDownloadURL().then((url)=>{
                     document.getElementById('list').innerHTML += `<li><a href="${url}">${file.name}</a></li>`;
+                    datos = {
+                        "Archivos" : [file.name]
+                    }
+
+                    db.collection('Archivos').doc(idCurso+"_"+video).set(datos);
                 }).catch(function(error) {
                 // Handle any errors
                 })
