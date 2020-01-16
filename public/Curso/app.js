@@ -74,9 +74,9 @@ async function cargarVideos() {
         var streams = doc.data().streams;
         numeroStream = streams.length;
         var videosUl = document.getElementById('videosUl');
-        videosUl.innerHTML += `<ul><a href="#" onclick="actualizaVideo(${dataClase.clave}, true)">Volver al Stream </a></ul>`;
+        videosUl.innerHTML += `<div class="list-group"><button type="button" class="btn btn-warning" onclick="actualizaVideo(${dataClase.clave}, true)">Volver al Stream <button><div class="list-group">`;
         for (var i = streams.length - 1; i >= 0; i--) {
-            videosUl.innerHTML += `<ul><a href="#" onclick="actualizaVideo(${i}, false)">Clase ${i} - ${streams[i]}</a></ul>`;
+            videosUl.innerHTML += `<div class="list-group"><button type="button" class="btn btn-warning" onclick="actualizaVideo(${i}, false)">Clase ${i} - ${streams[i]}<button><div class="list-group">`;
         }
     });
 }
@@ -243,4 +243,8 @@ actualizaVideo = (id, stream) => {
     }
 
     createInstance(id, stream);
+}
+
+function retorno() {
+    window.location = "https://imposing-bee-254701.firebaseapp.com/dashboard/index.html"
 }

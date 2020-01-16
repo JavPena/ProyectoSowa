@@ -1,16 +1,15 @@
-.FixedHeightContainer{
+.FixedHeightContainer {
     /* float:right; */
     height: 250px;
-    width:250px; 
-    padding:3px; 
-    background:gray;
-    
-
+    width: 250px;
+    padding: 3px;
+    background: #e9ecef
 }
-#chatDisplay{
-    height:224px;
-    overflow:auto;
-    background:#fff;
+
+#chatDisplay {
+    height: 224px;
+    overflow: auto;
+    background: #fff;
     word-wrap: break-word;
 }
 
@@ -18,4 +17,22 @@ textarea {
     width: 256px;
     height: 20px;
     resize: none;
+}
+
+.vertical-center {
+    min-height: 100%;
+    /* Fallback for browsers do NOT support vh unit */
+    min-height: 100vh;
+    /* These two lines are counted as one :-)       */
+    display: flex;
+    align-items: center;
+}
+
+html,
+body {
+    background-image: url('../assets/background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%;
+    font-family: 'Numans', sans-serif;
 }

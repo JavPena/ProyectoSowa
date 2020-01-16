@@ -73,7 +73,8 @@ actualizarVista = () => {
     console.log('me actualiza');
 
     var suscripciones = datosUsr.suscripciones;
-    var tabla = document.getElementById('Courses').getElementsByTagName('tbody')[0];
+
+    var newtabla = document.getElementById('newtable').getElementsByTagName('tbody')[0];
     suscripciones.forEach(id => {
         db.collection('Cursos').doc(id).get().then(doc => {
             // Se crean los datos
@@ -81,9 +82,11 @@ actualizarVista = () => {
             var desc = doc.data().descripcion;
             var code = doc.data().Codigo;
 
-            var fila = tabla.insertRow();
 
-            fila.innerHTML = `<tr><td>${nombre}</td><td>${desc}</td><td><a href="https://imposing-bee-254701.firebaseapp.com/Curso/index.html?Course=${code}">Curso<\a></td>`;
+            var newfila = newtabla.insertRow();
+
+            newfila.innerHTML = `<tr><td>${nombre}</td><td>${desc}</td><td><a href="https://imposing-bee-254701.firebaseapp.com/Curso/index.html?Course=${code}" class="badge badge-danger">LIVE</a></td>`;
+
         }).catch(err => { console.log(err) });
     });
 
